@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+html,body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #E1E6FA;
+  font-family: Montserrat, sans-serif;
+  background: linear-gradient(to bottom right, #161925, #1F2D2B);
+}
+
+.card-holder {
+  position: relative;
+  height: 277px;
+  width: 530px;
+  top: -20%;
+  transform: translateY(-20%);
+}
+
+.card-holder h1{
+  text-align: center;
+}
+
+.card-wrap {
+  transition: 600ms;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform-origin: 50%;
+          transform-origin: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 188px;
+  width: 480px;
+  padding: 50px 30px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  background: #232633;
+  border-radius: 6px;
+  transition: 600ms;
+}
+
+.input-wrap {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+input:not([type=submit]) {
+  flex: 0 1 100%;
+  color: #E1E6FA;
+  padding: 10px 15px;
+  background: #181A23;
+  border: none;
+}
+
+input[type=submit] {
+  position: absolute;
+  bottom: -38px;
+  left: 0;
+  width: 100%;
+  padding: 15px 0;
+  color: #102427;
+  border: none;
+  border-radius: 0 0 6px 6px;
+  background: #36d8bd;
+}

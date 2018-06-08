@@ -1,10 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
 
   @Get()
-  async root(){
-    return('CryptoXap - Payments')
-  }
+  @Render('index')
+  async root(){}
 }
