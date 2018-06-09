@@ -27,7 +27,8 @@ export class PaymentService {
       successURL: this.config.paymentSuccessURL,
       errorURL: this.config.paymentErrorURL
     }
-
-    return this._redsys.makePaymentParameters(params)
+    const response = this._redsys.makePaymentParameters(params)
+    response.env = this.config.environment;
+    return response
   }
 }

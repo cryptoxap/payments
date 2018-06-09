@@ -43,6 +43,10 @@ export class ConfigService {
     return validatedEnvConfig;
   }
 
+  get environment(): string {
+    return process.env.NODE_ENV || 'development'
+  }
+
   get port(): number {
     return parseInt(this.envConfig.PORT);
   }

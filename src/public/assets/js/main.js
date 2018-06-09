@@ -19,18 +19,19 @@ function sendPay() {
 
 function redsys(result) {
   
-  const DEBUG = true
   let form = document.createElement("form");
-  let action = DEBUG ? "sis-t.redsys.es:25443" : "sis.redsys.es"
+  let action = (result.env == 'production') ? "sis.redsys.es" : "sis-t.redsys.es:25443"
   form.setAttribute("action", `https://${action}/sis/realizarPago`) 
   form.setAttribute("method", "POST");
   form.setAttribute("style", "display: none");
 
   for(k in result) {
-    var field = document.createElement("input");
-    field.setAttribute("name", k);
-    field.setAttribute("value", result[k]);
-    form.appendChild(field);
+    if(k != 'env'){
+      var field = document.createElement("input");
+      field.setAttribute("name", k);
+      field.setAttribute("value", result[k]);
+      form.appendChild(field);
+    }
   }
 
   document.body.appendChild(form);
