@@ -14,7 +14,9 @@
     "format": "prettier --write \"**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
-    "prestart:prod": "rm -rf dist && tsc",
+    "assets": "cp -r ./src/public/ ./dist/",
+    "views": "cp -r ./src/views/ ./dist/views/",
+    "prestart:prod": "rm -rf dist && tsc -p . && npm run views && npm run assets",
     "start:prod": "node dist/main.js"
   },
   "dependencies": {
@@ -30,7 +32,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.11.1",
-    "@types/node": "^10.1.2",
+    "@types/node": "10.1.4",
     "nodemon": "^1.17.5",
     "prettier": "^1.11.1",
     "ts-loader": "^4.3.0",
