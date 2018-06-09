@@ -24,6 +24,12 @@ export class ConfigService {
   private validateInput(envConfig: EnvConfig): EnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
       PORT: Joi.number().default(3000),
+      MERCHANT_KEY: Joi.string(),
+      MERCHANT_URL: Joi.string(),
+      PAYMENT_SUCCESS_URL: Joi.string(),
+      PAYMENT_ERROR_URL: Joi.string(),
+      MERCHANT_NAME: Joi.string(),
+      MERCHANT_CODE: Joi.number()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -39,6 +45,30 @@ export class ConfigService {
 
   get port(): number {
     return parseInt(this.envConfig.PORT);
+  }
+
+  get merchantKey(): string {
+    return this.envConfig.MERCHANT_KEY;
+  }
+
+  get merchantURL(): string {
+    return this.envConfig.MERCHANT_URL
+  }
+
+  get paymentSuccessURL(): string {
+    return this.envConfig.PAYMENT_SUCCESS_URL
+  }
+
+  get paymentErrorURL(): string {
+    return this.envConfig.PAYMENT_ERROR_URL
+  }
+
+  get merchantName(): string {
+    return this.envConfig.MERCHANT_NAME
+  }
+
+  get merchantCode(): string {
+    return this.envConfig.MERCHANT_CODE
   }
 
 }

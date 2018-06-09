@@ -12,8 +12,27 @@ function sendPay() {
   }));
   xmlhttp.onreadystatechange = () => {
     if (xmlhttp.readyState == 4 && xmlhttp.status == "201") {
-      console.log(xmlhttp.responseText)
-      //redsys(JSON.parse(xmlhttp.responseText));
+      redsys(JSON.parse(xmlhttp.responseText));
     }
   };
+}
+
+function redsys(result) {
+  
+  const DEBUG = true
+  let form = document.createElement("form");
+  let action = DEBUG ? "sis-t.redsys.es:25443" : "sis.redsys.es"
+  form.setAttribute("action", `https://${action}/sis/realizarPago`) 
+  form.setAttribute("method", "POST");
+  form.setAttribute("style", "display: none");
+
+  for(k in result) {
+    var field = document.createElement("input");
+    field.setAttribute("name", k);
+    field.setAttribute("value", result[k]);
+    form.appendChild(field);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
 }
