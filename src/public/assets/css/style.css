@@ -61,7 +61,7 @@ body {
 }
 
 .smalls{
-  width: 100%;
+  width: auto;
     font-size: 14px;
     letter-spacing: 1px;
     color: white;
