@@ -15,10 +15,13 @@ function sendPay(token) {
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.responseType = 'json';
   xmlhttp.send(JSON.stringify({
+    'g-recaptcha-response': token,
     'userId': document.getElementById('customer-id').value,
+    'userName': document.getElementById('customer-name').value,
+    'userLastName': document.getElementById('customer-lastname').value,
     'email': document.getElementById('email').value,
     'amount': document.getElementById('amount').value,
-    'g-recaptcha-response': token
+    'currency': document.getElementById('currency').value
   }));
   xmlhttp.onreadystatechange = () => {
     if (xmlhttp.readyState === xmlhttp.DONE) {
