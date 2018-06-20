@@ -1,20 +1,38 @@
-document.getElementById('pay-submit').addEventListener('click', sendPay);
+window.onload = () => {
+  let submit = document.getElementById('pay-submit');
+  submit.onclick = validate;
+}
+ 
+function validate(event) {
+  event.preventDefault()
+  grecaptcha.execute();
+}
 
-function sendPay() {
-  var xmlhttp = new XMLHttpRequest();
+function sendPay(token) {
+  let xmlhttp = new XMLHttpRequest();
   xmlhttp.overrideMimeType("application/json");
   xmlhttp.open("POST", "/payment", true);
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.responseType = 'json';
   xmlhttp.send(JSON.stringify({
-    userId: document.getElementById('customer-id').value,
-    email: document.getElementById('email').value,
-    amount: document.getElementById('amount').value
+    'userId': document.getElementById('customer-id').value,
+    'email': document.getElementById('email').value,
+    'amount': document.getElementById('amount').value,
+    'g-recaptcha-response': token
   }));
   xmlhttp.onreadystatechange = () => {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == "201") {
-      redsys(JSON.parse(xmlhttp.responseText));
+    if (xmlhttp.readyState === xmlhttp.DONE) {
+      switch(xmlhttp.status) {
+        case 201:
+          redsys(xmlhttp.response);
+          break;
+        case 400:
+          alert(xmlhttp.response.message)
+          break;
+      } 
     }
-  };
+  }
+  grecaptcha.reset();
 }
 
 function redsys(result) {
@@ -33,7 +51,6 @@ function redsys(result) {
       form.appendChild(field);
     }
   }
-
   document.body.appendChild(form);
   form.submit();
 }
