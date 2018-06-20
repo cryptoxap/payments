@@ -29,7 +29,8 @@ export class ConfigService {
       PAYMENT_SUCCESS_URL: Joi.string(),
       PAYMENT_ERROR_URL: Joi.string(),
       MERCHANT_NAME: Joi.string(),
-      MERCHANT_CODE: Joi.number()
+      MERCHANT_CODE: Joi.number(),
+      RECAPTCHA_SECRET: Joi.string()
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -73,6 +74,10 @@ export class ConfigService {
 
   get merchantCode(): string {
     return this.envConfig.MERCHANT_CODE
+  }
+
+  get recaptcha_secret(): string {
+    return this.envConfig.RECAPTCHA_SECRET
   }
 
 }
