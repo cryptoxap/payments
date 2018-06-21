@@ -1,14 +1,36 @@
 window.onload = () => {
   let submit = document.getElementById('pay-submit');
   submit.onclick = validate;
+  new AutoNumeric('#amount', {
+    currencySymbol:'',
+    decimalCharacter : ',',
+    digitGroupSeparator : '.',
+  });
 }
  
 function validate(event) {
   event.preventDefault()
-  grecaptcha.execute();
+  let currency = document.getElementById('currency').value
+  let amount = (Number(AutoNumeric.getAutoNumericElement('#amount').getNumericString())
+  .toLocaleString("es-ES", {
+    style: 'currency',
+    currency: currency
+  }).replace( /[^0-9]/g,''))
+
+  if(amount < 500){
+    alert(`El importe no puede ser inferior a 5 ${currency}`)
+  } else {
+    grecaptcha.execute();
+  }
 }
 
 function sendPay(token) {
+  let currency = document.getElementById('currency').value
+  let amount = Number(AutoNumeric.getAutoNumericElement('#amount').getNumericString())
+  .toLocaleString("es-ES", {
+    style: 'currency',
+    currency: currency
+  })
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.overrideMimeType("application/json");
   xmlhttp.open("POST", "/payment", true);
@@ -16,12 +38,12 @@ function sendPay(token) {
   xmlhttp.responseType = 'json';
   xmlhttp.send(JSON.stringify({
     'g-recaptcha-response': token,
-    'userId': document.getElementById('customer-id').value,
-    'userName': document.getElementById('customer-name').value,
-    'userLastName': document.getElementById('customer-lastname').value,
+    'CustomerId': document.getElementById('customer-id').value,
+    'Name': document.getElementById('customer-name').value,
+    'LastName': document.getElementById('customer-lastname').value,
     'email': document.getElementById('email').value,
-    'amount': document.getElementById('amount').value,
-    'currency': document.getElementById('currency').value
+    'currency': currency,
+    'amount': amount.replace( /[^0-9]/g,'')
   }));
   xmlhttp.onreadystatechange = () => {
     if (xmlhttp.readyState === xmlhttp.DONE) {
