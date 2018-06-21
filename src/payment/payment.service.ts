@@ -2,7 +2,7 @@ import { Injectable, Inject, BadRequestException } from '@nestjs/common';
 import { HttpService } from '@nestjs/common/http';
 import { stringify } from 'querystring'
 import * as RedSys from 'redsys-pos';
-const { CURRENCIES, TRANSACTION_TYPES } = RedSys;
+const { CURRENCIES, TRANSACTION_TYPES, getResponseCodeMessage } = RedSys;
 
 @Injectable()
 export class PaymentService {
@@ -63,5 +63,16 @@ export class PaymentService {
         reject(new BadRequestException(err.toString()))
       })
     })
+  }
+
+  public checkResponse(merchantParams, signature){
+    let msg;
+    const result = this._redsys.checkResponseParameters(merchantParams, signature);
+    msg = getResponseCodeMessage(result.Ds_Response);
+
+    if(result.Ds_Response === '0000'){
+      msg = `La Transacción fué exitosa. El código de autorización es ${result.Ds_AuthorisationCode}`
+    }
+    return(msg);
   }
 }
