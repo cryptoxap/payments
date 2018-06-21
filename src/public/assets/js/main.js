@@ -18,10 +18,18 @@ function validate(event) {
   }).replace( /[^0-9]/g,''))
 
   if(amount < 500){
-    alert(`El importe no puede ser inferior a 5 ${currency}`)
+    swal({
+      text: `El importe no puede ser inferior a 5 ${currency}`,
+      type: 'error',
+      confirmButtonText: 'Aceptar'
+    })
   } else {
     if(!document.getElementById("check").checked){
-      alert("Debe aceptar los términos y condiciones de uso")
+      swal({
+        text: `Debe aceptar los términos y condiciones de uso`,
+        type: 'error',
+        confirmButtonText: 'Aceptar'
+      })
     } else {
       grecaptcha.execute();
     }
