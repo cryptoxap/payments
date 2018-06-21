@@ -20,7 +20,12 @@ function validate(event) {
   if(amount < 500){
     alert(`El importe no puede ser inferior a 5 ${currency}`)
   } else {
-    grecaptcha.execute();
+    if(!document.getElementById("check").checked){
+      alert("Debe aceptar los términos y condiciones de uso")
+    } else {
+      grecaptcha.execute();
+    }
+
   }
 }
 
